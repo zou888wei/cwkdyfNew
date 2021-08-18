@@ -1,0 +1,181 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(input-number) {
+  position: relative;
+  display: inline-block;
+
+  .el-input {
+    display: block;
+
+    &__inner {
+      -webkit-appearance: none;
+      text-align: center;
+    }
+  }
+
+  @include e((increase, decrease)) {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: auto;
+    color: $--color-text-regular;
+    background: $--background-color-base;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      color: $--color-primary;
+
+      &:not(.is-disabled) ~ .el-input .el-input__inner:not(.is-disabled) {
+        border-color: $--input-focus-border;
+      }
+    }
+
+    &.is-disabled {
+      color: $--disabled-color-base;
+      cursor: not-allowed;
+    }
+  }
+
+  @include e(increase) {
+    right: 1px;
+    border-radius: 0 $--border-radius-base $--border-radius-base 0;
+    border-left: $--border-base;
+  }
+
+  @include e(decrease) {
+    left: 1px;
+    border-radius: $--border-radius-base 0 0 $--border-radius-base;
+    border-right: $--border-base;
+  }
+
+  @include when(disabled) {
+    @include e((increase, decrease)) {
+      border-color: $--disabled-border-base;
+      color: $--disabled-border-base;
+
+      &:hover {
+        color: $--disabled-border-base;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @include m(medium) {
+    width: 100%;
+    line-height: #{$--input-medium-height - 2};
+
+    @include e((increase, decrease)) {
+      width: 3rem;
+      font-size: 1rem;
+    }
+
+    .el-input__inner {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+
+  @include m(small) {
+    width: 100%;
+
+    @include e((increase, decrease)) {
+      width: 2.5rem;
+      font-size: 1rem;
+
+      [class*="el-icon"] {
+        transform: scale(0.9);
+      }
+    }
+
+    .el-input__inner {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+  }
+
+  @include m(mini) {
+    width: 100%;
+    line-height: #{$--input-mini-height - 2};
+
+    @include e((increase, decrease)) {
+      width: 2rem;
+      font-size: 2rem;
+
+      [class*="el-icon"] {
+        transform: scale(0.8);
+      }
+    }
+
+    .el-input__inner {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @include when(without-controls) {
+    .el-input__inner {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
+  @include when(controls-right) {
+    .el-input__inner {
+      padding-left: 15px;
+      padding-right: #{$--input-height + 10};
+    }
+
+    @include e((increase, decrease)) {
+      height: auto;
+      line-height: #{($--input-height - 2) / 2};
+
+      [class*="el-icon"] {
+        transform: scale(0.8);
+      }
+    }
+
+    @include e(increase) {
+      border-radius: 0 $--border-radius-base 0 0;
+      border-bottom: $--border-base;
+    }
+
+    @include e(decrease) {
+      right: 1px;
+      bottom: 1px;
+      top: auto;
+      left: auto;
+      border-right: none;
+      border-left: $--border-base;
+      border-radius: 0 0 $--border-radius-base 0;
+    }
+
+    &[class*="medium"] {
+      [class*="increase"],
+      [class*="decrease"] {
+        line-height: 3rem;
+      }
+    }
+
+    &[class*="small"] {
+      [class*="increase"],
+      [class*="decrease"] {
+        line-height: 2.5rem;
+      }
+    }
+
+    &[class*="mini"] {
+      [class*="increase"],
+      [class*="decrease"] {
+        line-height: 2rem;
+      }
+    }
+  }
+}

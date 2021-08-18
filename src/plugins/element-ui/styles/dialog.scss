@@ -1,0 +1,151 @@
+@import "mixins/mixins";
+@import "mixins/utils";
+@import "common/var";
+
+@include b(dialog) {
+  margin-top: 8vh !important;
+  position: relative;
+  margin: 0 auto 50px;
+  width: 50%;
+  background: $--dialog-background-color;
+  border-radius: $--border-radius-small;
+  box-shadow: $--dialog-box-shadow;
+  box-sizing: border-box;
+
+  @include when(fullscreen) {
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+
+  @include e(wrapper) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    overflow: auto;
+  }
+
+  @include e(header) {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 3rem;
+    border-bottom: 1px solid $--color-primary;
+  }
+
+  @include e(headerbtn) {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    padding: 0.5rem;
+    line-height: 1;
+    font-size: 1rem;
+    background: transparent;
+    border: none;
+    transform: translateY(-50%);
+    cursor: pointer;
+    outline: none;
+
+    .el-dialog__close {
+      color: $--color-info;
+    }
+
+    &:focus,
+    &:hover {
+      .el-dialog__close {
+        color: $--color-primary;
+      }
+    }
+  }
+
+  @include e(title) {
+    position: relative;
+    display: block;
+    padding: 0 1.5rem;
+    height: 3rem;
+    line-height: 3rem;
+    font-size: $--dialog-title-font-size;
+    color: $--color-text-primary;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -0.25rem;
+      left: 0;
+      padding-right: 1rem;
+      width: 100%;
+      height: 0.25rem;
+      background-color: $--color-primary;
+      clip-path: polygon(0 92%, 96% 100%, 100% 0, 0 0);
+      user-select: none;
+      box-sizing: content-box;
+    }
+  }
+
+  @include e(body) {
+    padding: 1.5rem 2rem;
+    color: $--color-text-regular;
+    font-size: $--dialog-content-font-size;
+    word-break: break-all;
+    max-height: 550px;
+    overflow: auto;
+  }
+
+  @include e(footer) {
+    padding: 1rem 2rem 2rem;
+    text-align: center;
+    box-sizing: border-box;
+    .v-btn + .v-btn {
+      margin-left: 1.5rem;
+    }
+  }
+
+  // 内容居中布局
+  @include m(center) {
+    text-align: center;
+
+    @include e(body) {
+      text-align: initial;
+      padding: 25px ($--dialog-padding-primary + 5px) 30px;
+    }
+
+    @include e(footer) {
+      text-align: inherit;
+    }
+  }
+}
+
+.dialog-fade-enter-active {
+  animation: dialog-fade-in 0.3s;
+}
+
+.dialog-fade-leave-active {
+  animation: dialog-fade-out 0.3s;
+}
+
+@keyframes dialog-fade-in {
+  0% {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-fade-out {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, -20px, 0);
+    opacity: 0;
+  }
+}
